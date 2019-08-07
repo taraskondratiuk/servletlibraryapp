@@ -15,7 +15,7 @@ public class JDBCBookDao implements BookDao {
 
     @Override
     public void create(Book entity) {
-
+//todo check date
     }
 
     @Override

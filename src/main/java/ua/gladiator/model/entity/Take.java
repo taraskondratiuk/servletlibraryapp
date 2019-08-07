@@ -15,15 +15,11 @@ public class Take {
 
     private String bookPicUrl;
 
-    private String bookText;
-
     private LocalDate takeDate;
 
     private LocalDate returnDate;
 
     private LocalDate returnDeadline;
-
-    private Boolean isReturned;
 
     public Long getId() {
         return id;
@@ -73,14 +69,6 @@ public class Take {
         this.bookPicUrl = bookPicUrl;
     }
 
-    public String getBookText() {
-        return bookText;
-    }
-
-    public void setBookText(String bookText) {
-        this.bookText = bookText;
-    }
-
     public LocalDate getTakeDate() {
         return takeDate;
     }
@@ -103,13 +91,5 @@ public class Take {
 
     public void setReturnDeadline(LocalDate returnDeadline) {
         this.returnDeadline = returnDeadline;
-    }
-
-    public Boolean getReturned() {
-        return isReturned;
-    }
-
-    public void setReturned(Boolean returned) {
-        isReturned = returned;
     }
 }

@@ -1,8 +1,7 @@
 package main.java.ua.gladiator.model.entity;
 
-import com.sun.istack.internal.NotNull;
+import main.java.ua.gladiator.model.entity.enums.Role;
 
-import javax.management.relation.Role;
 import java.util.*;
 
 public class User {

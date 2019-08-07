@@ -93,4 +93,5 @@ public class Book {
     public void setAttributes(List<String> attributes) {
         this.attributes = attributes;
     }
+
 }
