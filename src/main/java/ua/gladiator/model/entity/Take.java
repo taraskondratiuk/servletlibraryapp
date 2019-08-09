@@ -1,25 +1,45 @@
-package main.java.ua.gladiator.model.entity;
+package ua.gladiator.model.entity;
 
 import java.time.LocalDate;
+import java.util.*;
 
 public class Take {
     private Long id;
-
     private String bookName;
-
     private String userEmail;
-
     private Integer userPhone;
-
     private String bookAuthor;
-
     private String bookPicUrl;
-
     private LocalDate takeDate;
-
     private LocalDate returnDate;
-
     private LocalDate returnDeadline;
+    private Long bookId;
+    private Long userId;
+    private Boolean isReturned;
+
+    public Boolean getReturned() {
+        return isReturned;
+    }
+
+    public void setReturned(Boolean returned) {
+        isReturned = returned;
+    }
+
+    public Long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public Long getId() {
         return id;
@@ -92,4 +112,47 @@ public class Take {
     public void setReturnDeadline(LocalDate returnDeadline) {
         this.returnDeadline = returnDeadline;
     }
+
+    @Override
+    public String toString() {
+        return "Take{" +
+                "id=" + id +
+                ", bookName='" + bookName + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", userPhone=" + userPhone +
+                ", bookAuthor='" + bookAuthor + '\'' +
+                ", bookPicUrl='" + bookPicUrl + '\'' +
+                ", takeDate=" + takeDate +
+                ", returnDate=" + returnDate +
+                ", returnDeadline=" + returnDeadline +
+                ", bookId=" + bookId +
+                ", userId=" + userId +
+                ", isReturned=" + isReturned +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Take take = (Take) o;
+        return Objects.equals(id, take.id) &&
+                Objects.equals(bookName, take.bookName) &&
+                Objects.equals(userEmail, take.userEmail) &&
+                Objects.equals(userPhone, take.userPhone) &&
+                Objects.equals(bookAuthor, take.bookAuthor) &&
+                Objects.equals(bookPicUrl, take.bookPicUrl) &&
+                Objects.equals(takeDate, take.takeDate) &&
+                Objects.equals(returnDate, take.returnDate) &&
+                Objects.equals(returnDeadline, take.returnDeadline) &&
+                Objects.equals(bookId, take.bookId) &&
+                Objects.equals(userId, take.userId) &&
+                Objects.equals(isReturned, take.isReturned);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, bookName, userEmail, userPhone, bookAuthor, bookPicUrl, takeDate, returnDate, returnDeadline, bookId, userId, isReturned);
+    }
 }
+

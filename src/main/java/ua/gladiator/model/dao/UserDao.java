@@ -1,6 +1,9 @@
-package main.java.ua.gladiator.model.dao;
+package ua.gladiator.model.dao;
 
-import main.java.ua.gladiator.model.entity.User;
+import ua.gladiator.model.entity.User;
+
+import java.util.*;
 
 public interface UserDao extends GenericDao<User> {
+    Optional<User> findByEmail(String email);
 }

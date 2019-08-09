@@ -1,6 +1,9 @@
-package main.java.ua.gladiator.model.dao;
+package ua.gladiator.model.dao;
 
-import main.java.ua.gladiator.model.entity.Take;
+import ua.gladiator.model.entity.Take;
+
+import java.util.*;
 
 public interface TakeDao extends GenericDao<Take> {
+    List<Take> findByParams(Boolean isReturned, String email, Long userId);
 }

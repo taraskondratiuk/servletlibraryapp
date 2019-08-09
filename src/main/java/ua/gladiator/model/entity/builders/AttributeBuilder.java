@@ -1,6 +1,6 @@
-package main.java.ua.gladiator.model.entity.builders;
+package ua.gladiator.model.entity.builders;
 
-import main.java.ua.gladiator.model.entity.Attribute;
+import ua.gladiator.model.entity.Attribute;
 
 public final class AttributeBuilder {
     private Long id;

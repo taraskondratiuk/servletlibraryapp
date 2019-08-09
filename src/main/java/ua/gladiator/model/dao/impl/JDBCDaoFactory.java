@@ -1,8 +1,6 @@
-package main.java.ua.gladiator.model.dao.impl;
+package ua.gladiator.model.dao.impl;
 
-import main.java.ua.gladiator.model.dao.*;
-import org.omg.CosNaming.NamingContextPackage.CannotProceedHelper;
-import org.omg.CosNaming.NamingContextPackage.CannotProceedHolder;
+import ua.gladiator.model.dao.*;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

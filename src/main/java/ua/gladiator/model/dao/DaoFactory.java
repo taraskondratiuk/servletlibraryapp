@@ -1,6 +1,6 @@
-package main.java.ua.gladiator.model.dao;
+package ua.gladiator.model.dao;
 
-import main.java.ua.gladiator.model.dao.impl.JDBCDaoFactory;
+import ua.gladiator.model.dao.impl.JDBCDaoFactory;
 
 public abstract class DaoFactory {
     private static volatile DaoFactory daoFactory;

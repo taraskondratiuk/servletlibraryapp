@@ -1,15 +1,13 @@
-package main.java.ua.gladiator.model.dao.mapper;
+package ua.gladiator.model.dao.mapper;
 
-import main.java.ua.gladiator.model.entity.Book;
-import main.java.ua.gladiator.model.entity.builders.BookBuilder;
+import ua.gladiator.model.entity.Book;
+import ua.gladiator.model.entity.builders.BookBuilder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
-public class BookMapper implements GenericMapper<Book> {
-    @Override
-    public Book extractFromResultSet(ResultSet rs) throws SQLException {
+public class BookMapper {
+    public static Book extractFromResultSet(ResultSet rs) throws SQLException {
         return BookBuilder
                 .builder()
                 .buildAddDate(rs.getDate("add_date").toLocalDate())
@@ -20,6 +18,7 @@ public class BookMapper implements GenericMapper<Book> {
                 .buildText(rs.getString("text"))
                 .buildPicUrl(rs.getString("pic_url"))
                 .buildId(rs.getLong("book_id"))
+                .buildIsAvailable(rs.getBoolean("is_available"))
                 .build();
     }
 }

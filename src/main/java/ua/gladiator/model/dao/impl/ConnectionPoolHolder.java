@@ -1,4 +1,4 @@
-package main.java.ua.gladiator.model.dao.impl;
+package ua.gladiator.model.dao.impl;
 
 import org.apache.commons.dbcp.BasicDataSource;
 

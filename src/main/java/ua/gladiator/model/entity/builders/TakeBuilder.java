@@ -1,6 +1,6 @@
-package main.java.ua.gladiator.model.entity.builders;
+package ua.gladiator.model.entity.builders;
 
-import main.java.ua.gladiator.model.entity.Take;
+import ua.gladiator.model.entity.Take;
 
 import java.time.LocalDate;
 
@@ -14,6 +14,9 @@ public final class TakeBuilder {
     private LocalDate takeDate;
     private LocalDate returnDate;
     private LocalDate returnDeadline;
+    private Long userId;
+    private Long bookId;
+    private Boolean isReturned;
 
     private TakeBuilder() {
     }
@@ -24,6 +27,16 @@ public final class TakeBuilder {
 
     public TakeBuilder buildId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public TakeBuilder buildUserId(Long id) {
+        this.userId = id;
+        return this;
+    }
+
+    public TakeBuilder buildBookId(Long id) {
+        this.bookId = id;
         return this;
     }
 
@@ -57,8 +70,12 @@ public final class TakeBuilder {
         return this;
     }
 
-    public TakeBuilder buildReturnDate(LocalDate returnDate) {
-        this.returnDate = returnDate;
+    public TakeBuilder buildReturnDate(java.sql.Date returnDate) {
+        if (returnDate == null) {
+            this.returnDate = null;
+        } else {
+            this.returnDate = returnDate.toLocalDate();
+        }
         return this;
     }
 
@@ -67,6 +84,10 @@ public final class TakeBuilder {
         return this;
     }
 
+    public TakeBuilder buildIsReturned(Boolean isReturned) {
+        this.isReturned = isReturned;
+        return this;
+    }
     public Take build() {
         Take take = new Take();
         take.setId(id);
@@ -78,6 +99,9 @@ public final class TakeBuilder {
         take.setTakeDate(takeDate);
         take.setReturnDate(returnDate);
         take.setReturnDeadline(returnDeadline);
+        take.setBookId(bookId);
+        take.setUserId(userId);
+        take.setReturned(isReturned);
         return take;
     }
 }

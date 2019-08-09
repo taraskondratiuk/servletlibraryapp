@@ -1,11 +1,11 @@
-package main.java.ua.gladiator.model.dao;
+package ua.gladiator.model.dao;
 
-import java.util.List;
+import java.util.*;
 
 public interface GenericDao<T> extends AutoCloseable{
     void create(T entity);
-    T findById(Long id);
-    void delete(int id);
+    Optional<T> findById(Long id);
+    void delete(Long id);
     List<T> findAll();
     void update(T entity);
     void close();

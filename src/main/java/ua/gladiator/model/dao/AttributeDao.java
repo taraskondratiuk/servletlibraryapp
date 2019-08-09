@@ -1,6 +1,6 @@
-package main.java.ua.gladiator.model.dao;
+package ua.gladiator.model.dao;
 
-import main.java.ua.gladiator.model.entity.Attribute;
+import ua.gladiator.model.entity.Attribute;
 
 public interface AttributeDao extends GenericDao<Attribute> {
 }

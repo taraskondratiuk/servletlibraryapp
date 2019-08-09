@@ -1,6 +1,7 @@
-package main.java.ua.gladiator.model.entity.builders;
+package ua.gladiator.model.entity.builders;
 
-import main.java.ua.gladiator.model.entity.Book;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import ua.gladiator.model.entity.Book;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -14,6 +15,7 @@ public final class BookBuilder {
     private String picUrl;
     private LocalDate addDate;
     private List<String> attributes;
+    private Boolean isAvailable;
 
     private BookBuilder() {
     }
@@ -67,6 +69,11 @@ public final class BookBuilder {
         return this;
     }
 
+    public BookBuilder buildIsAvailable(Boolean isAvailable) {
+        this.isAvailable = isAvailable;
+        return this;
+    }
+
     public Book build() {
         Book book = new Book();
         book.setId(id);
@@ -77,6 +84,7 @@ public final class BookBuilder {
         book.setPicUrl(picUrl);
         book.setAddDate(addDate);
         book.setAttributes(attributes);
+        book.setAvailable(isAvailable);
         return book;
     }
 }
