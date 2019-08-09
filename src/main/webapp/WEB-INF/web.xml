@@ -5,24 +5,45 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
   <display-name>Archetype Created Web Application</display-name>
+
   <servlet>
-    <servlet-name>servl</servlet-name>
-    <servlet-class>ua.gladiator.controller.MainController</servlet-class>
+    <servlet-name>accountController</servlet-name>
+    <servlet-class>ua.gladiator.controller.AccountsController</servlet-class>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>servl</servlet-name>
-    <url-pattern>/lib/*</url-pattern>
-    <url-pattern>/lib/</url-pattern>
+    <servlet-name>accountController</servlet-name>
+    <url-pattern>/lib/login</url-pattern>
+    <url-pattern>/lib/register</url-pattern>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
 
+  <servlet>
+    <servlet-name>takesController</servlet-name>
+    <servlet-class>ua.gladiator.controller.TakesController</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>takesController</servlet-name>
+    <url-pattern>/lib/admin/takes</url-pattern>
+    <url-pattern>/lib/user/takes</url-pattern>
+  </servlet-mapping>
 
 
-  <welcome-file-list>
-    <welcome-file>/index</welcome-file>
-  </welcome-file-list>
+  <servlet>
+    <servlet-name>booksController</servlet-name>
+    <servlet-class>ua.gladiator.controller.BooksController</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>booksController</servlet-name>
+    <url-pattern>/lib/admin/books</url-pattern>
+    <url-pattern>/lib/user/books</url-pattern>
+  </servlet-mapping>
+
+
+ 
 
 
 

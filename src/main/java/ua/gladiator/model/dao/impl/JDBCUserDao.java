@@ -58,6 +58,11 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
+    public List<User> findAll(Integer page) {
+        return null;
+    }
+
+    @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
         final String sql = rb.getString("user.findall");

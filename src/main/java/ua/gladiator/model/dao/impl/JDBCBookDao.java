@@ -1,5 +1,7 @@
 package ua.gladiator.model.dao.impl;
 
+import org.apache.log4j.Logger;
+import ua.gladiator.controller.AccountsController;
 import ua.gladiator.model.dao.BookDao;
 import ua.gladiator.model.dao.mapper.AttributeMapper;
 import ua.gladiator.model.dao.mapper.BookMapper;
@@ -18,6 +20,7 @@ public class JDBCBookDao implements BookDao {
 
     private static ResourceBundle rb = ResourceBundle.getBundle("properties.db", new Locale("en", "US"));
 
+    private static final Logger log = Logger.getLogger(BookDao.class);
 
     public JDBCBookDao(Connection connection) {
         this.connection = connection;
@@ -37,6 +40,7 @@ public class JDBCBookDao implements BookDao {
 
             ps.executeUpdate();
         } catch (SQLException e) {
+            log.trace(e);
             e.printStackTrace();
         }
 //todo check date
@@ -55,6 +59,7 @@ public class JDBCBookDao implements BookDao {
                 book = Optional.of(BookMapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
+            log.trace(e);
             e.printStackTrace();
         }
         return book;
@@ -65,12 +70,19 @@ public class JDBCBookDao implements BookDao {
         try (PreparedStatement ps = connection.prepareStatement(
                 rb.getString("book.delete"))) {
             ps.setLong(1, id);
+
             ps.executeUpdate();
 
         } catch (Exception e) {
+            log.trace(e);
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public List<Book> findAll(Integer page) {
+        return null;
     }
 
     @Override
@@ -85,29 +97,14 @@ public class JDBCBookDao implements BookDao {
                 books.add(BookMapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
+            log.trace(e);
             e.printStackTrace();
         }
         return books;
     }
 
     public List<Book> findByParams(String attribute, String author, String line) {
-            List<Book> books = new ArrayList<>();
-            try (PreparedStatement ps = connection.prepareStatement(
-                    rb.getString("book.findbyparams"))) {
-
-                ps.setString(1, "%" + line + "%");
-                ps.setString(2, "%" + line + "%");
-                ps.setString(3, "%" + author + "%");
-                ps.setString(4, "%" + attribute + "%");
-
-                resultSet = ps.executeQuery();
-                while (resultSet.next()) {
-                    books.add(BookMapper.extractFromResultSet(resultSet));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return books;
+            return null;
     }
 
     public void setAvailable(Long id) {
@@ -118,8 +115,33 @@ public class JDBCBookDao implements BookDao {
 
             ps.executeUpdate();
         } catch (Exception e) {
+            log.trace(e);
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Book> findByParams(String attribute, String author, String line, Integer startingEl, Integer pageSize) {
+        List<Book> books = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(
+                rb.getString("book.findbyparams"))) {
+
+            ps.setString(1, "%" + Objects.toString(line, "") + "%");
+            ps.setString(2, "%" + Objects.toString(line, "") + "%");
+            ps.setString(3, "%" + Objects.toString(author, "") + "%");
+            ps.setString(4, "%" + Objects.toString(attribute, "") + "%");
+            ps.setInt(5, startingEl);
+            ps.setInt(6, pageSize);
+
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                books.add(BookMapper.extractFromResultSet(resultSet));
+            }
+        } catch (Exception e) {
+            log.trace(e);
+            e.printStackTrace();
+        }
+        return books;
     }
 
     public void setUnavailable(Long id) {
@@ -130,6 +152,7 @@ public class JDBCBookDao implements BookDao {
 
             ps.executeUpdate();
         } catch (Exception e) {
+            log.trace(e);
             e.printStackTrace();
         }
     }
@@ -144,6 +167,7 @@ public class JDBCBookDao implements BookDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            log.trace(e);
             e.printStackTrace();
             throw new RuntimeException(e);
         }

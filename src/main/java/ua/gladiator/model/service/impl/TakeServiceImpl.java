@@ -20,6 +20,8 @@ public class TakeServiceImpl implements TakeService {
     private TakeDao takeDao;
     private BookDao bookDao;
 
+    private static ResourceBundle rb = ResourceBundle.getBundle("properties.db", new Locale("en", "US"));
+
     @Override
     public Take makeTakeReturned(User user, Long id) {
         bookDao = daoFactory.createBookDao();
@@ -42,7 +44,17 @@ public class TakeServiceImpl implements TakeService {
     @Override
     public List<Take> getFilteredTakes(Boolean isReturned, Long id, String email, Integer page) {
         takeDao = daoFactory.createTakeDao();
-        List<Take> takes = takeDao.findByParams(isReturned, email, id);
+
+
+        Integer pageSize = Integer.parseInt(rb.getString("page.size.takes"));
+
+
+        if (page == null) {
+            page = 1;
+        }
+        Integer startingElement = (page - 1) * pageSize;
+
+        List<Take> takes = takeDao.findByParams(isReturned, email, id, startingElement, pageSize);
         takeDao.close();
         return takes;
     }

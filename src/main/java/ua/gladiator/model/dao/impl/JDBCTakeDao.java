@@ -1,5 +1,6 @@
 package ua.gladiator.model.dao.impl;
 
+import org.apache.log4j.Logger;
 import ua.gladiator.model.dao.TakeDao;
 import ua.gladiator.model.dao.mapper.TakeMapper;
 import ua.gladiator.model.entity.Take;
@@ -11,6 +12,9 @@ public class JDBCTakeDao implements TakeDao {
     private static ResourceBundle rb = ResourceBundle.getBundle("properties.db", new Locale("en", "US"));
     private Connection connection;
     private ResultSet resultSet;
+
+
+    private static final Logger log = Logger.getLogger(JDBCTakeDao.class);
 
 
     public JDBCTakeDao(Connection connection) {
@@ -30,6 +34,7 @@ public class JDBCTakeDao implements TakeDao {
 
             ps.executeUpdate();
         } catch (SQLException e) {
+            log.trace(e);
             e.printStackTrace();
         }
     }
@@ -47,9 +52,15 @@ public class JDBCTakeDao implements TakeDao {
                 take = Optional.of(TakeMapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
+            log.trace(e);
             e.printStackTrace();
         }
         return take;
+    }
+
+    @Override
+    public List<Take> findAll(Integer page) {
+        return null;
     }
 
     @Override
@@ -63,12 +74,14 @@ public class JDBCTakeDao implements TakeDao {
         final String sql = rb.getString("att.findall");
 
         try (Statement statement = connection.createStatement()) {
+
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
                 takes.add(TakeMapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
+            log.trace(e);
             e.printStackTrace();
         }
         return takes;
@@ -88,48 +101,41 @@ public class JDBCTakeDao implements TakeDao {
 
             ps.executeUpdate();
         } catch (SQLException e) {
+            log.trace(e);
             e.printStackTrace();
         }
     }
 
     //todo test
-    public List<Take> findByParams(Boolean isReturned, String email, Long userId) {
+    public List<Take> findByParams(Boolean isReturned, String email, Long userId, Integer startingEl, Integer pageSize) {
         List<Take> takes = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(
                 rb.getString("take.findbyparams"))) {
 
-            if (isReturned != null) {
-                ps.setBoolean(1, isReturned);
-                ps.setBoolean(2, isReturned);
-            } else {
-
+            if (isReturned == null) {
                 ps.setNull(1, 0);
                 ps.setNull(2, 0);
-            }
-
-            if (email != null) {
-
-                ps.setString(3,"%" + email + "%");
-                ps.setString(4, "%" + email + "%");
             } else {
-                ps.setNull(3, 0);
-                ps.setNull(4, 0);
+                ps.setBoolean(2, isReturned);
+                ps.setBoolean(1, isReturned);
             }
-            if (userId != null) {
-                ps.setLong(5, userId);
-                ps.setLong(6, userId);
-            } else {
-                ps.setNull(5, 0);
-                ps.setNull(6, 0);
 
-            }
+            ps.setString(3,"%" + Objects.toString(email, "") + "%");
+            ps.setString(4,"%" + Objects.toString(email, "") + "%");
+
+            ps.setString(5, Objects.toString(userId, ""));
+            ps.setString(6, Objects.toString(userId, ""));
+
+            ps.setInt(7, startingEl);
+            ps.setInt(8, pageSize);
+
             System.out.println(ps);
-
             resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 takes.add(TakeMapper.extractFromResultSet(resultSet));
             }
         } catch (Exception e) {
+            log.trace(e);
             e.printStackTrace();
         }
         return takes;
@@ -140,6 +146,7 @@ public class JDBCTakeDao implements TakeDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            log.trace(e);
             e.printStackTrace();
             throw new RuntimeException(e);
         }

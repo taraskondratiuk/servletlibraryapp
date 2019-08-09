@@ -22,6 +22,9 @@ public class BookServiceImpl implements BookService {
     private BookDao bookDao;
     private AttributeDao attributeDao;
 
+    private static ResourceBundle rb = ResourceBundle.getBundle("properties.db", new Locale("en", "US"));
+
+
     @Override
     public Book addBook(Book book) {
         bookDao = daoFactory.createBookDao();
@@ -63,16 +66,23 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public List<Book> getBooksByParams(List<String> attributes, String line, String author, Integer pageNum) {
+    public List<Book> getBooksByParams(List<String> attributes, String line, String author, Integer page) {
         bookDao = daoFactory.createBookDao();
         attributeDao = daoFactory.createAttributeDao();
+
+        Integer pageSize = Integer.parseInt(rb.getString("page.size.books"));
+        if (page == null) {
+            page = 1;
+        }
+        Integer startingElement = (page - 1) * pageSize;
+
         List<Book> bookList;
         if (attributes.size() == 0) {
             attributeDao.findAll().forEach(v -> attributes.add(v.getName()));
         }
         bookList = attributes
                 .stream()
-                .map(v ->  bookDao.findByParams(v, author, line))
+                .map(v ->  bookDao.findByParams(v, author, line, startingElement, pageSize))
                 .flatMap(List::stream)
                 .distinct()
                 .collect(Collectors.toList());

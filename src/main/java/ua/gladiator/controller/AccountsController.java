@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.*;
 
 
-public class MainController extends HttpServlet {
+public class AccountsController extends AbstractController{
 
     private AttributeService attributeService = new AttributeServiceImpl();
 
@@ -47,8 +47,8 @@ public class MainController extends HttpServlet {
 
 
 
-        System.out.println(123);
 
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        processRequest(req, resp, "admin/index.jsp");
+
     }
 }
