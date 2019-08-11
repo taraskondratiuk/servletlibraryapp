@@ -58,6 +58,7 @@ public class JDBCAttributeDao implements AttributeDao {
         return attributes;
     }
 
+    @Override
     public Optional<Attribute> findByName(String name) {
         try (PreparedStatement ps = connection.prepareStatement(
                 rb.getString("att.findbyname"))) {

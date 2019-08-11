@@ -101,7 +101,7 @@ public final class TakeBuilder {
         take.setReturnDeadline(returnDeadline);
         take.setBookId(bookId);
         take.setUserId(userId);
-        take.setReturned(isReturned);
+        take.setIsReturned(isReturned);
         return take;
     }
 }

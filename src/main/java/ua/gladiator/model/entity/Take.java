@@ -17,11 +17,11 @@ public class Take {
     private Long userId;
     private Boolean isReturned;
 
-    public Boolean getReturned() {
+    public Boolean getIsReturned() {
         return isReturned;
     }
 
-    public void setReturned(Boolean returned) {
+    public void setIsReturned(Boolean returned) {
         isReturned = returned;
     }
 

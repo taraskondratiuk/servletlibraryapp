@@ -5,6 +5,7 @@ import ua.gladiator.model.dao.DaoFactory;
 import ua.gladiator.model.dao.TakeDao;
 import ua.gladiator.model.dao.UserDao;
 import ua.gladiator.model.entity.User;
+import ua.gladiator.model.entity.builders.UserBuilder;
 import ua.gladiator.model.service.UserService;
 
 import java.util.*;
@@ -15,7 +16,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getCurrentUser() {
-        return null;
+        return UserBuilder.builder()
+                .buildEmail("sdfkj;")
+                .buildPhoneNumber(34223)
+                .buildId(4L)
+                .build();
     }
 
     @Override

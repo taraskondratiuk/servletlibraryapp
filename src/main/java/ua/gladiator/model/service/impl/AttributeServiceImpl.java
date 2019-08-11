@@ -26,4 +26,13 @@ public class AttributeServiceImpl implements AttributeService {
         attributeDao.close();
         return attribute;
     }
+
+    @Override
+    public Boolean checkIfExists(String name) {
+        attributeDao = daoFactory.createAttributeDao();
+        Optional<Attribute> attribute = attributeDao.findByName(name);
+        attributeDao.close();
+        return attribute.isPresent();
+    }
+
 }

@@ -9,6 +9,7 @@ import ua.gladiator.model.entity.Book;
 import ua.gladiator.model.entity.Take;
 import ua.gladiator.model.entity.User;
 import ua.gladiator.model.entity.builders.TakeBuilder;
+import ua.gladiator.model.entity.dto.Page;
 import ua.gladiator.model.entity.exception.BookNotFoundException;
 import ua.gladiator.model.service.BookService;
 
@@ -24,11 +25,20 @@ public class BookServiceImpl implements BookService {
 
     private static ResourceBundle rb = ResourceBundle.getBundle("properties.db", new Locale("en", "US"));
 
+    @Override
+    public Boolean isNameUnique(String name) {
+        bookDao = daoFactory.createBookDao();
+        Boolean isUnique = bookDao.isUnique(name);
+        bookDao.close();
+        return isUnique;
+    }
 
     @Override
     public Book addBook(Book book) {
         bookDao = daoFactory.createBookDao();
         bookDao.create(book);
+        book.getAttributes().forEach(v -> bookDao.addAttribute(book.getName(), v));
+
         bookDao.close();
         return book;
     }
@@ -56,7 +66,7 @@ public class BookServiceImpl implements BookService {
 
         book.setAvailable(false);
 
-        bookDao.update(book);
+        bookDao.setUnavailable(bookId);
         takeDao.create(take);
 
         takeDao.close();
@@ -64,31 +74,39 @@ public class BookServiceImpl implements BookService {
         return book;
     }
 
-
     @Override
-    public List<Book> getBooksByParams(List<String> attributes, String line, String author, Integer page) {
+    public Page<Book> getBooksByParams(String attributes[], String line, String author, Integer pageNum) {
         bookDao = daoFactory.createBookDao();
         attributeDao = daoFactory.createAttributeDao();
 
+
         Integer pageSize = Integer.parseInt(rb.getString("page.size.books"));
-        if (page == null) {
-            page = 1;
-        }
-        Integer startingElement = (page - 1) * pageSize;
+
+        Integer startingElement = (pageNum - 1) * pageSize;
 
         List<Book> bookList;
-        if (attributes.size() == 0) {
-            attributeDao.findAll().forEach(v -> attributes.add(v.getName()));
+        List<String> attributesList = Arrays.stream(attributes).collect(Collectors.toList());
+        if (attributes[0].equals("")) {
+            attributeDao.findAll().forEach(v -> attributesList.add(v.getName()));
         }
-        bookList = attributes
-                .stream()
-                .map(v ->  bookDao.findByParams(v, author, line, startingElement, pageSize))
-                .flatMap(List::stream)
-                .distinct()
-                .collect(Collectors.toList());
+        bookList = bookDao.findByParams(attributesList, author, line, startingElement, pageSize);
 
+        Integer count = bookDao.countByParams(attributesList, author, line);
+        Integer totalPages = (count / pageSize) + Integer.signum(count % pageSize);
+
+        Page<Book> bookPage = new Page<>(bookList, totalPages, pageSize, pageNum);
+        attributeDao.close();
+        bookDao.close();
+        return bookPage;
+    }
+
+    @Override
+    public void deleteBook(Long id) {
+        bookDao = daoFactory.createBookDao();
+
+        bookDao.deleteBooksAttributes(id);
+        bookDao.delete(id);
 
         bookDao.close();
-        return bookList;
     }
 }

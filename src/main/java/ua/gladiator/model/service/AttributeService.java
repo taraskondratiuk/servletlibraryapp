@@ -7,4 +7,6 @@ import java.util.*;
 public interface AttributeService {
     List<Attribute> getAllAttributes();
     Attribute createAttribute(Attribute attribute);
+
+    Boolean checkIfExists(String name);
 }

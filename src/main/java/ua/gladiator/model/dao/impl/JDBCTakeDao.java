@@ -28,8 +28,7 @@ public class JDBCTakeDao implements TakeDao {
             ps.setDate(1, java.sql.Date.valueOf(entity.getReturnDeadline()));
             ps.setLong(2, entity.getBookId());
             ps.setLong(3, entity.getUserId());
-            ps.setDate(4, java.sql.Date.valueOf(entity.getReturnDate()));
-            ps.setDate(5, java.sql.Date.valueOf(entity.getTakeDate()));
+            ps.setDate(4, java.sql.Date.valueOf(entity.getTakeDate()));
 
 
             ps.executeUpdate();
@@ -96,40 +95,35 @@ public class JDBCTakeDao implements TakeDao {
             ps.setLong(3, entity.getUserId());
             ps.setDate(4, java.sql.Date.valueOf(entity.getReturnDate()));
             ps.setDate(5, java.sql.Date.valueOf(entity.getTakeDate()));
-            ps.setBoolean(7, entity.getReturned());
-            ps.setLong(6, entity.getId());
+            ps.setBoolean(6, entity.getIsReturned());
+            ps.setLong(7, entity.getId());
 
             ps.executeUpdate();
+
         } catch (SQLException e) {
             log.trace(e);
             e.printStackTrace();
         }
     }
 
-    //todo test
-    public List<Take> findByParams(Boolean isReturned, String email, Long userId, Integer startingEl, Integer pageSize) {
+    @Override
+    public List<Take> findByParams(String isReturned, String email, Long userId, Integer startingEl, Integer pageSize) {
         List<Take> takes = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(
                 rb.getString("take.findbyparams"))) {
 
-            if (isReturned == null) {
-                ps.setNull(1, 0);
-                ps.setNull(2, 0);
-            } else {
-                ps.setBoolean(2, isReturned);
-                ps.setBoolean(1, isReturned);
-            }
+            ps.setString(1, isReturned);
+            ps.setString(2, isReturned);
 
             ps.setString(3,"%" + Objects.toString(email, "") + "%");
-            ps.setString(4,"%" + Objects.toString(email, "") + "%");
 
+
+            ps.setString(4, Objects.toString(userId, ""));
             ps.setString(5, Objects.toString(userId, ""));
-            ps.setString(6, Objects.toString(userId, ""));
 
-            ps.setInt(7, startingEl);
-            ps.setInt(8, pageSize);
+            ps.setInt(6, startingEl);
+            ps.setInt(7, pageSize);
 
-            System.out.println(ps);
             resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 takes.add(TakeMapper.extractFromResultSet(resultSet));
@@ -139,6 +133,34 @@ public class JDBCTakeDao implements TakeDao {
             e.printStackTrace();
         }
         return takes;
+    }
+
+    @Override
+    public Integer countByParams(String isReturned, String email, Long userId) {
+        Integer count = 0;
+        try (PreparedStatement ps = connection.prepareStatement(
+                rb.getString("take.countbyparams"))) {
+
+
+            ps.setString(1, isReturned);
+            ps.setString(2, isReturned);
+            ps.setString(3,"%" + Objects.toString(email, "") + "%");
+            ps.setString(4,"%" + Objects.toString(email, "") + "%");
+
+            ps.setString(5, Objects.toString(userId, ""));
+            ps.setString(6, Objects.toString(userId, ""));
+
+
+            resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+            return count;
+        } catch (Exception e) {
+            log.trace(e);
+            e.printStackTrace();
+        }
+        return count;
     }
 
     @Override

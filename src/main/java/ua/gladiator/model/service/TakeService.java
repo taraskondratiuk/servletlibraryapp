@@ -3,11 +3,12 @@ package ua.gladiator.model.service;
 import ua.gladiator.model.entity.Book;
 import ua.gladiator.model.entity.Take;
 import ua.gladiator.model.entity.User;
+import ua.gladiator.model.entity.dto.Page;
 
 import java.util.*;
 
 public interface TakeService {
-    Take makeTakeReturned(User user, Long id);
+    Take makeTakeReturned(Long id);
 
-    List<Take> getFilteredTakes(Boolean isReturned, Long id, String email, Integer page);
+    Page<Take> getFilteredTakes(String isReturnedString, Long id, String email, Integer pageNum);
 }

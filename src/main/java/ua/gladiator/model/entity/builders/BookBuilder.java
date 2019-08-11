@@ -64,6 +64,7 @@ public final class BookBuilder {
         return this;
     }
 
+
     public BookBuilder buildAttributesWithString(String attributes) {
         this.attributes = Arrays.asList(attributes.split(",", 0));
         return this;
