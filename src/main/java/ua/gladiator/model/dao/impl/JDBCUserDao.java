@@ -58,11 +58,6 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public List<User> findAll(Integer page) {
-        return null;
-    }
-
-    @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
         final String sql = rb.getString("user.findall");
@@ -84,6 +79,7 @@ public class JDBCUserDao implements UserDao {
 
     }
 
+    @Override
     public void setReaderRole(Long id) {
         try (PreparedStatement ps = connection.prepareStatement(
                 rb.getString("user.setreaderrole"))) {
@@ -93,6 +89,24 @@ public class JDBCUserDao implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    @Override
+    public Long findIdByEmail(String  email) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                rb.getString("user.findid"))) {
+
+            ps.setString(1, email);
+
+            resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+               return resultSet.getLong("user_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException();
     }
 
     @Override

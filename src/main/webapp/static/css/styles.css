@@ -394,3 +394,11 @@ ul, li {
 .take-info {
     padding-top: 5px;
 }
+.index {
+    text-align: center;
+    align-content: center;
+}
+.index button{
+    margin-top: 20px;
+    width: 140px;
+}

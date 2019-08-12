@@ -84,11 +84,6 @@ public class JDBCAttributeDao implements AttributeDao {
     }
 
     @Override
-    public List<Attribute> findAll(Integer page) {
-        return null;
-    }
-
-    @Override
     public void close() {
         try {
             connection.close();

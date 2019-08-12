@@ -58,11 +58,6 @@ public class JDBCTakeDao implements TakeDao {
     }
 
     @Override
-    public List<Take> findAll(Integer page) {
-        return null;
-    }
-
-    @Override
     public void delete(Long id) {
 
     }

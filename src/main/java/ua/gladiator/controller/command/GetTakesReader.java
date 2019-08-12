@@ -19,7 +19,7 @@ public class GetTakesReader implements Command {
 
         req.setAttribute("page", takeService.getFilteredTakes(
                 params.getOrDefault("returned", new String[]{""})[0],
-                userService.getCurrentUser().getId(),
+                userService.getCurrentUser(req).getId(),
                 "",
                 Integer.parseInt(params.getOrDefault("page", new String[]{"1"})[0]))
         );

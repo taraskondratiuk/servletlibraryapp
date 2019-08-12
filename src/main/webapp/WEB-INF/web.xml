@@ -20,5 +20,24 @@
   </servlet-mapping>
 
 
+  <filter>
+    <filter-name>AuthFilter</filter-name>
+    <filter-class>ua.gladiator.controller.filter.AuthFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+
+  <filter>
+    <filter-name>LogoutFilter</filter-name>
+    <filter-class>ua.gladiator.controller.filter.LogoutFIter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LogoutFilter</filter-name>
+    <url-pattern>/logout</url-pattern>
+  </filter-mapping>
+
 
 </web-app>

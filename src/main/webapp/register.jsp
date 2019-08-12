@@ -1,3 +1,5 @@
+
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -43,13 +45,45 @@
 
 <section class="page-wrapper container">
 
-    <h2>main page</h2>
-<div class="index col-lg-16">
-    <a href="${pageContext.request.contextPath}/login"><button type="button" class="btn-lg btn-info ind-but">Log in</button></a>
-    <br>
-    <a href="${pageContext.request.contextPath}/register"><button type="button" class="btn-lg btn-info">register</button></a>
-    <br>
-</div>
+    <div class="takes-filter col-lg-4 mgtop-container">
+        <div class="form-horizontal filter-form col-lg-12">
+            <fieldset>
+
+                <form action="${pageContext.request.contextPath}/register" method="post">
+                    <div class="form-group col-lg-16 input-field-my">
+                        <div class="">
+                            <input id="email" name="email" type="text" class="form-control input-md" placeholder="Reader email">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-16 input-field-my">
+                        <div class="">
+                            <input id="pq" name="password" type="password" class="form-control input-md" placeholder="Reader email">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-16 input-field-my">
+                        <div class="">
+                            <input  name="coCode" type="text" class="form-control input-md" placeholder="Reader email">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-16 input-field-my">
+                        <div class="">
+                            <input  name="phone" type="text" class="form-control input-md" placeholder="Reader email">
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label" for="filter-button"></label>
+                        <div class="col-lg-4">
+                            <button type="submit" id="filter-button"  class="btn btn-info">confirm</button>
+                        </div>
+                    </div>
+
+                </form>
+            </fieldset>
+        </div>
+    </div>
 
 </section>
 <footer class="footer">

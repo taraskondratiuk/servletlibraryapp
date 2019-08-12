@@ -123,11 +123,6 @@ public class JDBCBookDao implements BookDao {
     }
 
     @Override
-    public List<Book> findAll(Integer page) {
-        return null;
-    }
-
-    @Override
     public List<Book> findAll() {
         List<Book> books = new ArrayList<>();
         final String sql = rb.getString("book.findall");

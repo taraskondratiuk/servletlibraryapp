@@ -43,13 +43,10 @@
 
 <section class="page-wrapper container">
 
-    <h2>main page</h2>
-<div class="index col-lg-16">
-    <a href="${pageContext.request.contextPath}/login"><button type="button" class="btn-lg btn-info ind-but">Log in</button></a>
-    <br>
-    <a href="${pageContext.request.contextPath}/register"><button type="button" class="btn-lg btn-info">register</button></a>
-    <br>
-</div>
+    <div>
+        no such url
+        <fmt:message key="message.deny" />
+    </div>
 
 </section>
 <footer class="footer">
